@@ -23,7 +23,7 @@ pipenv install waitress
 Перейшовши на неї, бачимо текст "hello world 4"
 http://localhost:5000/api/v1/hello-world-4
 
-## ссилочки
+## ссилочки, щоб ти приблизно розумів, як би то мало робитись
 
 https://github.com/shymanskyivm/Labs_For_Application_Programming/tree/main/Lab%206 
 https://github.com/shymanskyivm/Labs_For_Application_Programming/tree/main/Lab%207 

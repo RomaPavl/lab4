@@ -1,0 +1,593 @@
+openapi: 3.0.0
+info:
+  title: Сервіс кредитування
+  version: 1.0.0
+servers:
+ - url: http://localhost:5000/api/v1
+   description: Development server
+paths:
+  /user:
+     post:
+       summary: Create user
+       tags:
+        - User
+       operationId: AddUser
+       requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/User'
+        required: true
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+  /users:
+     get:
+       summary: Get list of users
+       tags:
+        - User
+       operationId: GetList
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"       
+  /user/{user_id}:
+    get:
+       summary: Get user by id
+       tags:
+        - User
+       operationId: GetUserById
+       parameters:
+        - name: user_id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: integer
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/User'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+                  
+    delete:
+      tags:
+        - User
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUserById
+      parameters:
+        - name: user_id
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+         description: successful 
+        '404':
+          description: User not found
+          
+          
+    put:
+      summary: Change user
+      tags:
+        - User
+      operationId: ChangeUsersFullname
+      parameters:
+      - name: user_id
+        in: path
+        description: Status
+        required: true
+        schema:
+            type: string
+      responses:
+        '200':
+         description: successful 
+         content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/User'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"       
+  /user/findByStatus:
+    get:
+       summary: Get users by status
+       tags:
+        - User
+       operationId: GetUserByStatus
+       parameters: 
+        - name: status
+          in: query
+          description: Status
+          required: false
+          schema:
+            type: string
+            default: paid
+            enum:
+            - paid
+            - did not pay
+            - the credit is still valid 
+       responses:
+        '200':
+         description: successful 
+         content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/User'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error" 
+                  
+                  
+  /user/{First Name}/{Last Name}:
+    get:
+      summary: Get users by fullname
+      tags:
+        - User
+      operationId: GetUsersFullname
+      parameters:
+      - name: First Name
+        in: path
+        description: Status
+        required: true
+        schema:
+            type: string
+      - name: Last Name
+        in: path
+        description: Status
+        required: true
+        schema:
+            type: string      
+      responses:
+        '200':
+         description: successful 
+         content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/User'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"  
+                  
+  /credit:
+    post:
+       summary: Create credit
+       tags:
+        - Credit
+       operationId: CreateCredit
+       requestBody:
+        description: Create a credit
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Credit'
+        required: true
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credit'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+  /credits:
+     get:
+       summary: Get list of credits
+       tags:
+        - Credit
+       operationId: GetListOfCredits
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credits'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"                    
+  /credit/findByStatus:                
+    get:
+       summary: Find Credit By Status
+       tags:
+        - Credit
+       operationId: FindCreditByStatus
+       parameters: 
+        - name: status
+          in: query
+          description: Status
+          required: false
+          schema:
+            type: string
+            default: paid
+            enum:
+            - paid
+            - did not pay
+            - the credit is still valid 
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credit'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+                  
+  /credit/{Register_Date}:                
+    get:
+       summary: Find Credit By Register Date
+       tags:
+        - Credit
+       operationId: FindCreditByRegisterDate
+       parameters: 
+        - name: Register_Date
+          in: path
+          description: Status
+          required: true
+          schema:
+            type: string
+            format: 2022-07-01T15:00:00:01
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credit'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"                
+  /credit/{credit_id}:
+    get:
+       summary: Get credit by id
+       tags:
+        - Credit
+       operationId: GetCreditById
+       parameters:
+        - name: credit_id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: integer
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Credit'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+    put:
+      summary: Changes credit Id
+      tags:
+        - Credit
+      operationId: ChangeUsersCredit
+      parameters:
+      - name: credit_id
+        in: path
+        description: Id
+        required: true
+        schema:
+            type: integer
+      responses:
+        '200':
+         description: successful 
+         content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Credit'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"                 
+    delete:
+      tags:
+        - Credit
+      summary: Delete credit
+      description: Delete Credit By Id
+      operationId: deleteCreditById
+      parameters:
+        - name: credit_id
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+         description: successful 
+        '404':
+          description: Credit not found
+          
+          
+          
+  /creditor:
+     post:
+       summary: Create creditor
+       tags:
+        - Creditor
+       operationId: AddCreditor
+       requestBody:
+        description: Add a new creditor
+        content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Creditor'
+        required: true
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Creditor'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+
+  /creditors:
+     get:
+       summary: Get list of users
+       tags:
+        - Creditor
+       operationId: GetListOfCreditors
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Creditors'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"       
+  /creditor/{creditor_id}:
+    get:
+       summary: Get creditor by id
+       tags:
+        - Creditor
+       operationId: GetCreditorById
+       parameters:
+        - name: creditor_id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: integer
+       responses:
+        '200':
+         description: successful operation
+         content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Creditor'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+    put:
+      summary: Changes creditor Id
+      tags:
+        - Creditor
+      operationId: ChangeUsersCreditor
+      parameters:
+      - name: creditor_id
+        in: path
+        description: Id
+        required: true
+        schema:
+            type: integer
+      responses:
+        '200':
+         description: successful 
+         content:
+          application/json:
+            schema:
+             $ref: '#/components/schemas/Creditor'
+        'default':
+            description: Помилка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"     
+                  
+    delete:
+      tags:
+        - Creditor
+      summary: Delete creditor
+      operationId: deleteCreditorById
+      parameters:
+        - name: creditor_id
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+         description: successful 
+        '404':
+          description: Creditor not found
+components:
+  schemas:
+    User:
+      type: object
+      required:
+         - firstName
+         - lastName
+         - status
+      properties:
+        user_id:
+         type: integer
+         example: 12
+        firstName:
+          type: string
+          example: Rodrigo
+        lastName:
+          type: string
+          example: Rodriguez
+        enail:
+          type: string
+          example: rodrige@email.com
+        phone:
+          type: string
+          example: '12325'
+        status:
+          type: string
+          enum:
+            - paid
+            - did not pay
+            - the credit is still valid
+            
+    Creditor:
+      type: object
+      required:
+         - Name
+      properties:
+        creditor_id:
+         type: integer
+         example: 12
+        Name:
+          type: string
+          example: Rodrigo
+        Budget:
+          type: integer
+          maximum: 517000
+          example: 517000
+        phone:
+          type: string
+          example: '1232325'
+          
+    Credit:
+      type: object
+      required:
+         - sum_of_credit
+         - percent_of_credit
+         - status
+      properties:
+        credit_id:
+          type: integer
+          example: 13
+        sum_of_credit:
+          type: integer
+          example: 30000
+        percent_of_credit:
+          type: number
+          example: 5%
+        userId:
+          type: integer
+          example: 10
+        creditorId:
+          type: integer
+          example: 10
+        register_at:
+          type: string
+          format: 2022-07-01T15:00:00:01
+        deadline:
+          type: string
+          format: 2023-07-01T15:00:00:01
+        status:
+          type: string
+          enum:
+            - paid
+            - did not pay
+            - the credit is still valid
+            
+    Credits:
+        type: array
+        items:
+          $ref: '#/components/schemas/Credit'
+          
+    Creditors:
+        type: array
+        items:
+          $ref: '#/components/schemas/Creditor'
+    Users:
+        type: array
+        items:
+          $ref: '#/components/schemas/User'
+    Error:
+       type: object
+       required:
+         - code
+         - message
+       properties:
+          code:
+            type: integer
+            format: int32
+          message:
+            type: string
+  
+

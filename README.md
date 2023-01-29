@@ -21,7 +21,7 @@ pipenv install waitress
 ```waitress-serve --host 127.0.0.1 serve:cfaw```
 За допомогою декоратора ```@app.route("/api/v1/hello-world-4")``` реалізуємо адресу.
 Перейшовши на неї, бачимо текст "hello world 4"
-http://localhost:5000/api/v1
+http://localhost:5000/api/v1/hello-world-4
 
 ##ссилочки
 

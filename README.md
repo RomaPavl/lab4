@@ -1,9 +1,9 @@
 # lab4
 ## Створення та налаштування проекту за допомогою pipenv
 
-python version 3.8.6
+python version 3.8.10
 
-flask version 2.2.2
+flask version 2.3.2
 
 ## Завантаження 
 
